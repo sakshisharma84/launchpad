@@ -40,11 +40,11 @@ email: luke@jedicorp.com
 
 ## Prepare nodes for your cluster
 
-In order to install UCP cluster, you'll need some machines. You can provision those machines from your favourite public cloud provider or use your private datacenter. Any machines with one of the [supported operating systems](supported-host-operating-systems.md) may be used. We recommend at minimum 2 machines.
+In order to install UCP cluster, you'll need some machines. You can provision those machines from your favourite public cloud provider or use your private datacenter. Any machines with one of the [supported operating systems](system-requirements.md#supported-host-operating-systems-for-ucp-clusters) may be used. We recommend at minimum 2 machines.
 
 ## Create the cluster configuration file
 
-The cluster is configured using a yaml file. In this example we setup simple 1+1 UCP Kubernetes cluster, one node acts as the UCP control plane and one as pure worker node.
+The cluster is configured using [a yaml file](configuration-file.md). In this example we setup simple 1+1 UCP Kubernetes cluster, one node acts as the UCP control plane and one as pure worker node.
 
 Open up your favourite editor, and type something similar as in the example below. Once done, save the file as `cluster.yaml`. Naturally you need to adjust the example below to match your infrastructure details.
 
@@ -75,7 +75,7 @@ For more complex setups, there's a huge amount of [configuration options](config
 Once the cluster configuration file is ready, we can fire up the cluster. In the same directory where you created the `cluster.yaml` file, run:
 
 ```
-$ launchpad install
+$ launchpad apply
 ```
 
 The `launchpad` tool connects to the infrastructure you've specified in the `cluster.yaml` with SSH connections and configures everything needed on the hosts. Within few minutes you should have your cluster up-and-running.
