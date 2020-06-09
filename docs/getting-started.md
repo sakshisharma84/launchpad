@@ -36,8 +36,8 @@ To finalize the installation, you'll need to complete the registration. The info
 ```
 $ launchpad register
 name: Luke Skywalker
-company: Jedi Corp
 email: luke@jedicorp.com
+company: Jedi Corp
 ```
 
 ## Prepare nodes for your cluster
