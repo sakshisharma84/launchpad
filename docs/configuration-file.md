@@ -7,50 +7,62 @@ Mirantis Launchpad cluster configuration is described in a file that is in YAML 
 The complete `cluster.yaml` reference for UCP clusters:
 
 ```yaml
-apiVersion: launchpad.mirantis.com/v1beta1
+apiVersion: launchpad.mirantis.com/v1beta2
 kind: UCP
 metadata:
   name: launchpad-ucp
 spec:
   hosts:
-  - address: 1.2.1.2
-    user: root
-    sshPort: 22
-    sshKeyPath: ~/.ssh/id_rsa
-    privateInterface: eth0
+  - address: 10.0.0.1
     role: manager
-  # - address: 1.3.1.3
-  #   user: root
-  #   sshKeyPath: ~/.ssh/id_rsa
-  #   privateInterface: ens5
-  #   role: worker
-  # - address: 1.4.1.4
-  #   user: docker
-  #   sshKeyPath: ~/.ssh/id_rsa
-  #   privateInterface: "Ethernet 3"
-  #   role: worker
-  # ucp:
-  #   version: 3.3.0-rc4
-  #   imageRepo: "docker.io/docker"
-  #   installFlags:
-  #   - --admin-username=admin
-  #   - --admin-password=orcaorcaorca
-  #   configFile: ./ucp-config.toml
-  #   configData: |-
-  #     [scheduling_configuration]
-  #       default_node_orchestrator = "kubernetes"
-  # engine:
-  #   version: 19.03.8-rc1
-  #   channel: test
-  #   repoURL: https://repos.mirantis.com
-  #   installURL: https://get.mirantis.com/
+    ssh:
+      user: root
+      port: 22
+      keyPath: ~/.ssh/id_rsa
+    privateInterface: eth0
+    environment:
+      http_proxy: http://example.com
+      NO_PROXY: 10.0.0.*
+    engineConfig:
+      debug: true
+      log-opts:
+        max-size: 10m
+        max-file: "3"
+  - address: 10.0.0.2
+    role: worker
+    winRM:
+        user: Administrator
+        port: 5986
+        useHTTPS: true
+        insecure: false
+        useNTLM: false
+        caCertPath: ~/.certs/cacert.pem
+        certPath: ~/.certs/cert.pem
+        keyPath: ~/.certs/key.pem
+        password: abcd1234
+  ucp:
+    version: 3.3.0-rc4
+    imageRepo: "docker.io/docker"
+    installFlags:
+    - --admin-username=admin
+    - --admin-password=orcaorcaorca
+    configFile: ./ucp-config.toml
+    configData: |-
+      [scheduling_configuration]
+        default_node_orchestrator = "kubernetes"
+  engine:
+    version: 19.03.8-rc1
+    channel: test
+    repoURL: https://repos.mirantis.com
+    installURLLinux: https://get.mirantis.com/
+    installURLWindows: https://get.mirantis.com/install.ps1
 ```
 
 We follow Kubernetes like versioning and grouping the launchpad configuration, hence you'll see familiar attributes such as `kind` etc.
 
 ## `apiVersion`
 
-Currently only `launchpad.mirantis.com/v1beta1` is supported.
+Currently `launchpad.mirantis.com/v1beta1` and `launchpad.mirantis.com/v1beta2` are supported. A `v1beta1` configuration will still work unchanged, but `v1beta2` features such as `environment`, `engineConfig` and `winRM` can not be used with `v1beta2`.
 
 ## `kind`
 
@@ -58,7 +70,7 @@ Currently only `UCP` is supported.
 
 ## `metadata`
 
-- `name` - Name of the cluster to be created. Affects only `launchpad` internal storage paths currently e.g. for client bundles.
+- `name` - Name of the cluster to be created. Affects only `launchpad` internal storage paths currently e.g. for client bundles and log files.
 
 ## `spec`
 
@@ -70,10 +82,30 @@ Specify the machines for the cluster.
 
 - `address` - Address of the machine. This needs to be an address to which `launchpad` tool can connect to with SSH protocol.
 - `user` - Username with sudo/admin permission to use for logging in (default: `root`)
-- `sshPort` - Host's ssh port (default: `22`)
-- `sshKeyPath` - A local file path to an ssh private key file (default `~/.ssh/id_rsa`)
+- `environment` - Key - value pairs in YAML map (hash, dictionary) syntax. Values will be updated to host environment.
+- `ssh` - SSH connection configuration options
+- `winRM` - WinRM connection configuration options
+- `engineConfig` - Docker Engine configuration in YAML mapping syntax, will be converted to `daemon.json`.
 - `privateInterface` - Discover private network address from the configured network interface (optional)
 - `role` - One of `manager` or `worker`, specifies the role of the machine in the cluster
+
+#### `ssh`
+
+- `user` - User to log in as (default: `root`)
+- `port` - Host's ssh port (default: `22`)
+- `keyPath` - A local file path to an ssh private key file (default `~/.ssh/id_rsa`)
+
+#### `winRM`
+
+- `port` - Host's WinRM listening port (default: `5986`)
+- `useHTTPS` - Set `true` to use HTTPS protocol. When false, plain HTTP is used. (default: `false`)
+- `insecure` - Set `true` to ignore SSL certificate validation errors (default: `false`)
+- `useNTLM` - Set `true` to use NTLM (default: `false`)
+- `caCertPath` - Path to CA Certificate file
+- `certPath` - Path to Certificate file
+- `keyPath` - Path to Key file
+- `user` - Windows account username (default: `Administrator`)
+- `password` - User account password
 
 ### `ucp`
 
@@ -92,7 +124,8 @@ Specify options for UCP cluster itself.
 - `version` - The version of Docker EE engine to be installed or upgraded to. (default `19.03.8`)
 - `channel` - Which installation channel to use. One of `test` or `prod` (optional)
 - `repoURL` - Which repository URL to use for engine installation. (optional)
-- `installURL` - Where to download the initial installer script. (optional)
+- `installURLLinux` - Where to download the initial installer script for linux hosts. Also local paths can be used. (default: `https://get.mirantis.com/`)
+- `installURLWindows` - Where to download the initial installer script for windows hosts. Also local paths can be used. (default: `https://get.mirantis.com/install.ps1`)
 
-**Note:** Normally you should not need to specify anything else than the version for the engine. `repoUrl` and `installURL` are only usually used when installing from non-standard location, e.g. when running in disconnected datacenters.
+**Note:** Normally you should not need to specify anything else than the version for the engine. `repoUrl` and `installURLLinux/Windows` are only usually used when installing from non-standard location, e.g. when running in disconnected datacenters.
 
