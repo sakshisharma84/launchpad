@@ -7,17 +7,13 @@ Mirantis Launchpad allows users to upgrade their clusters with  single `launchpa
 Say you want to upgrade the Docker EE engine running in the cluster. You've bootsrapped the cluster with version `19.03.8` and want to upgrade to say `19.03.14`. What you'd need to do is to bump the engine version in your `cluster.yaml` file:
 
 ```yaml
-apiVersion: launchpad.mirantis.com/v1beta1
+apiVersion: launchpad.mirantis.com/v1beta2
 kind: UCP
 metadata:
   name: launchpad-ucp
 spec:
   hosts:
-  - address: 1.2.1.2
-    user: root
-    sshPort: 22
-    sshKeyPath: ~/.ssh/id_rsa
-    privateInterface: eth0
+  - address: 10.0.0.1
     role: manager
   engine:
     version: 19.03.14 # was previously 19.03.8
@@ -29,17 +25,13 @@ Once the file is ready, just re-run `launchpad apply` command. Launchpad will up
 When newer version of UCP is available you need to just bump the UCP version tag in the `cluster.yml`:
 
 ```yaml
-apiVersion: launchpad.mirantis.com/v1beta1
+apiVersion: launchpad.mirantis.com/v1beta2
 kind: UCP
 metadata:
   name: launchpad-ucp
 spec:
   hosts:
-  - address: 1.2.1.2
-    user: root
-    sshPort: 22
-    sshKeyPath: ~/.ssh/id_rsa
-    privateInterface: eth0
+  - address: 10.0.0.1
     role: manager
   ucp:
     version: 3.3.1
