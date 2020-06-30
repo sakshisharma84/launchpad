@@ -29,3 +29,6 @@ variable "worker_type" {
 variable "worker_volume_size" {
   default = 100
 }
+
+variable "windows_administrator_password" {
+}
