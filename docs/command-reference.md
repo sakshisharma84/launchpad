@@ -1,5 +1,11 @@
 # Mirantis Launchpad Command Reference
 
+## Common arguments
+
+* `--disable-analytics` - Disables sending of analytics and telemetry data
+* `--debug` - Increase output verbosity
+* `--help` - Display command help
+
 ## Initialize a cluster config file
 
 `launchpad init`
@@ -12,7 +18,6 @@ The supported options are:
 
 * `--config` - Path to a cluster config file (default: `cluster.yaml`)
 * `--prune` - Automatically remove nodes that are not anymore part of cluster config yaml (default: `false`)
-
 
 ## Download a Client Bundle
 
