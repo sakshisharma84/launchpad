@@ -2,7 +2,8 @@
 
 ## Common arguments
 
-* `--disable-analytics` - Disables sending of analytics and telemetry data
+* `--disable-telemetry` - Disables sending of analytics and telemetry data
+* `--accept-license` - Accept the [end user license agreement](https://github.com/Mirantis/launchpad/blob/master/LICENSE) 
 * `--debug` - Increase output verbosity
 * `--help` - Display command help
 
@@ -38,7 +39,6 @@ The supported options are:
 * `--name` - Name
 * `--email` - Email
 * `--company` - Company
-* `--accept-license` - Accept license
 
 ## Reset (uninstall) a cluster
 
