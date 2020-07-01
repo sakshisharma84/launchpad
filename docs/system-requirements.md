@@ -34,11 +34,14 @@ Mirantis Launchpad is a static binary that works on following operating systems:
 
 Note that Windows container images are typically larger than Linux container images. For this reason, you should provision more local storage for Windows nodes.
 
-### SSH
+### Remote management
 
-Launchpad will connect to machines via SSH. Thus, SSH is required to be enabled on host machines. Only password-less sudo capable SSH Key-Based authentication is supported.
+Launchpad will connect to Linux machines via SSH and to Windows machines via SSH or WinRM. Thus, SSH or WinRM is required to be enabled on host machines. Only passwordless sudo capable SSH Key-Based authentication is supported. On Windows the user needs to have Administrator privileges.
 
 #### Windows Machines
+
+##### SSH
+
 To enable SSH easily on Windows machines, you can look the following PowerShell snippets and modify them for your own needs and run it on each Windows machine:
 
 ```
@@ -66,7 +69,11 @@ ssh --% Administrator@1.2.1.2 powershell -c $ConfirmPreference = 'None'; Repair-
 
 To read more how to manage Windows with OpenSSH, you can refer the official documentation: https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview
 
+##### WinRM
+
+PowerShell Remoting over WinRM can be also used on Windows hosts as an alternative to SSH. To read more about how to manage Windows machines over WinRM: https://docs.microsoft.com/en-us/windows/win32/winrm/portal
+
 ### Ports Used
 
-When installing an UCP cluster, a series of ports need to be opened to incoming traffic. See [UCP documentation](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/install-ucp.html#ports-used) for more details.
+When installing a UCP cluster, a series of ports need to be opened to incoming traffic. See [UCP documentation](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/install-ucp.html#ports-used) for more details.
 

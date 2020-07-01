@@ -59,28 +59,36 @@ locals {
   managers = [
     for host in module.masters.machines : {
       address = host.public_ip
-      user    = "ubuntu"
       role    = host.tags["Role"]
       privateInterface = "ens5"
-      sshKeyPath = "./ssh_keys/${var.cluster_name}.pem"
+      ssh = {
+        user    = "ubuntu"
+        keyPath = "./ssh_keys/${var.cluster_name}.pem"
+      }
     }
   ]
   workers = [
     for host in module.workers.machines : {
       address = host.public_ip
-      user    = "ubuntu"
       role    = host.tags["Role"]
       privateInterface = "ens5"
-      sshKeyPath = "./ssh_keys/${var.cluster_name}.pem"
+      ssh = {
+        user    = "ubuntu"
+        keyPath = "./ssh_keys/${var.cluster_name}.pem"
+      }
     }
   ]
   windows_workers = [
     for host in module.windows_workers.machines : {
       address = host.public_ip
-      user    = "administrator"
       role    = host.tags["Role"]
       privateInterface = "Ethernet 2"
-      sshKeyPath = "./ssh_keys/${var.cluster_name}.pem"
+      winRM = {
+        user    = "Administrator"
+        password = var.windows_administrator_password
+        useHTTPS = true
+        insecure = true
+      }
     }
   ]
 }
@@ -88,7 +96,7 @@ locals {
 
 output "ucp_cluster" {
   value = {
-    apiVersion = "launchpad.mirantis.com/v1beta1"
+    apiVersion = "launchpad.mirantis.com/v1beta2"
     kind = "UCP"
     spec = {
       ucp = {

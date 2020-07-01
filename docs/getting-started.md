@@ -51,7 +51,7 @@ The cluster is configured using [a yaml file](configuration-file.md). In this ex
 Open up your favourite editor, and type something similar as in the example below. Once done, save the file as `cluster.yaml`. Naturally you need to adjust the example below to match your infrastructure details.
 
 ```yaml
-apiVersion: launchpad.mirantis.com/v1beta1
+apiVersion: launchpad.mirantis.com/v1beta2
 kind: UCP
 metadata:
   name: ucp-kube
@@ -64,10 +64,12 @@ spec:
   hosts:
   - address: 192.168.110.100
     role: manager
-    sshKeyPath: ~/.ssh/my_key
+    ssh:
+      keyPath: ~/.ssh/my_key
   - address: 192.168.110.101
     role: worker
-    sshKeyPath: ~/.ssh/my_key
+    ssh:
+      keyPath: ~/.ssh/my_key
 ```
 
 For more complex setups, there's a huge amount of [configuration options](configuration-file.md) available.
@@ -80,7 +82,7 @@ Once the cluster configuration file is ready, we can fire up the cluster. In the
 $ launchpad apply
 ```
 
-The `launchpad` tool connects to the infrastructure you've specified in the `cluster.yaml` with SSH connections and configures everything needed on the hosts. Within few minutes you should have your cluster up-and-running.
+The `launchpad` tool connects to the infrastructure you've specified in the `cluster.yaml` with SSH or WinRM connections and configures everything needed on the hosts. Within few minutes you should have your cluster up-and-running.
 
 ## Interact with your cluster
 
