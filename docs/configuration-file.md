@@ -50,6 +50,12 @@ spec:
     configData: |-
       [scheduling_configuration]
         default_node_orchestrator = "kubernetes"
+    cloud:
+      provider: azure
+      configFile: ~/cloud-provider.conf
+      configData: |-
+        [Global]
+        region=RegionOne
   engine:
     version: 19.03.8-rc1
     channel: test
@@ -116,7 +122,16 @@ Specify options for UCP cluster itself.
 - `installFlags` - Custom installation flags for UCP installation. You can get a list of supported installation options for a specific UCP version by running the installer container with `docker run -t -i --rm docker/ucp:3.3.0 install --help`. (optional)
 - `configFile` - The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options). (optional)
 - `configData` -  The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options) in embedded "heredocs" way. (optional)
+- `cloud` - Cloud provider configuration (optional)
 
+#### `cloud`
+
+Cloud provider configuration. 
+
+- `provider` - Provider name (currently azure and openstack (UCP 3.4.0+) are supported)
+- `configFile` - Path to cloud provider configuration file on local machine
+- `configData` - Inlined cloud provider configuration
+ 
 ### `engine`
 
  Specify options for Docker EE engine to be installed
