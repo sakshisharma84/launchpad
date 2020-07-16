@@ -66,10 +66,12 @@ spec:
     role: manager
     ssh:
       keyPath: ~/.ssh/my_key
+      user: ubuntu
   - address: 192.168.110.101
     role: worker
     ssh:
       keyPath: ~/.ssh/my_key
+      user: ubuntu
 ```
 
 For more complex setups, there's a huge amount of [configuration options](configuration-file.md) available.
