@@ -14,10 +14,6 @@ variable "image_id" {}
 
 variable "kube_cluster_tag" {}
 
-variable "ssh_key" {
-  description = "SSH key name"
-}
-
 variable "worker_count" {
   default = 0
 }

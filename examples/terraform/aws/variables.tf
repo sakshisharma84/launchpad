@@ -42,3 +42,6 @@ variable "master_volume_size" {
 variable "worker_volume_size" {
   default = 100
 }
+
+variable "windows_administrator_password" {
+}

@@ -15,7 +15,6 @@ locals {
   subnet_count = length(var.subnet_ids)
 }
 
-
 resource "aws_instance" "ucp_worker" {
   count = var.worker_count
 
@@ -83,6 +82,7 @@ Set-Service WinRM -StartupType "Automatic"
 Start-Service WinRM
 </powershell>
 EOF
+
 
   lifecycle {
     ignore_changes = [ami]
