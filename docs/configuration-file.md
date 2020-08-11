@@ -41,7 +41,7 @@ spec:
         keyPath: ~/.certs/key.pem
         password: abcd1234
   ucp:
-    version: 3.3.0-rc4
+    version: 3.3.0
     imageRepo: "docker.io/docker"
     installFlags:
     - --admin-username=admin
@@ -50,6 +50,7 @@ spec:
     configData: |-
       [scheduling_configuration]
         default_node_orchestrator = "kubernetes"
+    licenseFilePath: ./ucp-license.lic
     cloud:
       provider: azure
       configFile: ~/cloud-provider.conf
@@ -57,7 +58,7 @@ spec:
         [Global]
         region=RegionOne
   engine:
-    version: 19.03.8-rc1
+    version: 19.03.8
     channel: test
     repoURL: https://repos.mirantis.com
     installURLLinux: https://get.mirantis.com/
@@ -123,6 +124,7 @@ Specify options for UCP cluster itself.
 - `configFile` - The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options). (optional)
 - `configData` -  The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options) in embedded "heredocs" way. (optional)
 - `cloud` - Cloud provider configuration (optional)
+- `licenseFilePath` - Path to a license file
 
 #### `cloud`
 
