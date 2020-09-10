@@ -1,27 +1,42 @@
-# Mirantis Launchpad Command Reference
+# Mirantis Launchpad command reference
 
-## Common arguments
+
+## Available for all Launchpad commands
+
+Optional arguments that can be used with any of the `launchpad` commands.
 
 * `--disable-telemetry` - Disables sending of analytics and telemetry data
-* `--accept-license` - Accept the [end user license agreement](https://github.com/Mirantis/launchpad/blob/master/LICENSE) 
+* `--accept-license` - Accept the [end user license agreement](https://github.com/Mirantis/launchpad/blob/master/LICENSE)
 * `--debug` - Increase output verbosity
 * `--help` - Display command help
 
-## Initialize a cluster config file
+## Initialize Launchpad
+
+Intializes the cluster config file, usually called launchpad.yaml.
 
 `launchpad init`
 
 ## Initialize or upgrade a cluster
 
+After you initialize the cluster config file, you can _apply_ the settings and
+initialize or upgrade a cluster.
+
 `launchpad apply`
 
 The supported options are:
 
-* `--config` - Path to a cluster config file (default: `cluster.yaml`)
-* `--prune` - Automatically remove nodes that are not anymore part of cluster config yaml (default: `false`)
-* `--force` - Continue installation in some cases where prerequisite validation fails (default: `false`)
+* `--config` - Path to a cluster config file, including the filename
+(default: `launchpad.yaml`)
+* `--prune` - Remove nodes that are no longer in the cluster config yaml
+(default: `false`)
+* `--force` - Continue installation when prerequisite validation fails
+(default: `false`)
 
-## Download a Client Bundle
+## Download a client bundle
+
+The client bundle contains a private and public key pair that authorizes
+Launchpad to interact with 
+[UCP CLI](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/user-access.html#cli-access).
 
 `launchpad download-bundle`
 
@@ -29,9 +44,12 @@ The supported options are:
 
 * `--username` - Username
 * `--password` - Password
-* `--config` - Path to a cluster config file (default: `cluster.yaml`)
+* `--config` - Path to a cluster config file, including the filename
+(default: `launchpad.yaml`)
 
 ## Register
+
+Registers a user.
 
 `launchpad register`
 
@@ -41,10 +59,17 @@ The supported options are:
 * `--email` - Email
 * `--company` - Company
 
-## Reset (uninstall) a cluster
+## Reset or uninstall a cluster
+
+To reset or uninstall a UCP cluster.
 
 `launchpad reset`
 
 The supported options are:
 
-* `--config` - Path to a cluster config file (default: `cluster.yaml`)
+* `--config` - Path to a cluster config file, including the filename
+(default: `launchpad.yaml`)
+
+## Related topics
+
+* [Launchpad configuration file reference](configuration-file.md)

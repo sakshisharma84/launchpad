@@ -1,10 +1,10 @@
 # Bootstrapping UCP cluster on AWS
 
-This directory provides an example flow with Mirantis Launchpad together with Terraform and AWS.
+This directory provides an example flow for using Mirantis Launchpad with Terraform and AWS.
 
-## Pre-requisites
+## Prerequisites
 
-* You need an account and credentials for AWS.
+* An account and credentials for AWS.
 * Terraform [installed](https://learn.hashicorp.com/terraform/getting-started/install)
 * [yq installed](https://github.com/mikefarah/yq#install)
 
@@ -13,7 +13,5 @@ This directory provides an example flow with Mirantis Launchpad together with Te
 1. Create terraform.tfvars file with needed details. You can use the provided terraform.tfvars.example as a baseline.
 2. `terraform init`
 3. `terraform apply`
-4. `terraform output -json | yq r --prettyPrint - ucp_cluster.value > cluster.yaml`
+4. `terraform output -json | yq r --prettyPrint - ucp_cluster.value > launchpad.yaml`
 5. `launchpad apply`
-6. Profit! :)
-

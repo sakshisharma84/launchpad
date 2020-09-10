@@ -1,10 +1,12 @@
 # Mirantis Launchpad Configuration File
 
-Mirantis Launchpad cluster configuration is described in a file that is in YAML format. You can create and modify these files using your favorite text editor. The default name for this file is cluster.yaml, although other file names could be used.
+Mirantis Launchpad cluster configuration is described in YAML format. You can
+create and modify yaml files using your favorite text editor. The default name
+for this file is launchpad.yaml, although other file names could be used.
 
 ## Configuration File Reference
 
-The complete `cluster.yaml` reference for UCP clusters:
+The complete `launchpad.yaml` file looks something like this, but with values determined by your specific configuration.
 
 ```yaml
 apiVersion: launchpad.mirantis.com/v1beta3
@@ -78,11 +80,14 @@ spec:
     installURLWindows: https://get.mirantis.com/install.ps1
 ```
 
-We follow Kubernetes like versioning and grouping the launchpad configuration, hence you'll see familiar attributes such as `kind` etc.
+We follow Kubernetes-like versioning and grouping in launchpad configuration
+so you'll see familiar attributes such as `kind`.
 
 ## `apiVersion`
 
-Currently `launchpad.mirantis.com/v1beta1`, `v1beta2` and `v1beta3` are supported. Earlier configuration syntaxes should still work unchanged, but any changes and additions in new versions are not backwards compatible.
+Launchpad currently supports `launchpad.mirantis.com/v1beta1`, `v1beta2`, and
+`v1beta3`. Earlier configuration file syntaxes should still work but
+will not have support for changes and additions in new versions.
 
 ## `kind`
 
@@ -90,7 +95,8 @@ Currently only `DockerEnterprise` is supported.
 
 ## `metadata`
 
-- `name` - Name of the cluster to be created. Affects only `launchpad` internal storage paths currently e.g. for client bundles and log files.
+- `name` - Name of the cluster to be created. Affects only `launchpad` internal
+storage paths currently e.g. for client bundles and log files.
 
 ## `spec`
 
@@ -98,23 +104,35 @@ The specification for the cluster.
 
 ### `hosts`
 
-Specify the machines for the cluster.
+The machines that the cluster runs on.
 
-- `address` - Address of the machine. This needs to be an address the `launchpad` tool can connect to using SSH protocol.
-- `privateInterface` - Discover private network address from the configured network interface (default: `eth0`)
-- `ssh` - [SSH](#ssh) connection configuration options
-- `winRM` - [WinRM](#winrm) connection configuration options
-- `role` - One of `manager` or `worker` or `dtr`, specifies the role of the machine in the cluster
-- `environment` - Key - value pairs in YAML mapping syntax. Values will be updated to host environment. (optional)
-- `engineConfig` - Docker Engine configuration in YAML mapping syntax, will be converted to `daemon.json`. (optional)
+- `address` - Address of the SSH server that `launchpad` can connect to using
+SSH protocol
+- `privateInterface` - Private network address for the configured network
+interface (default: `eth0`)
+- `ssh` - [SSH](#ssh) Secure Shell (SSH) connection configuration options
+- `winRM` - [WinRM](#winrm) Windows Remote Management (WinRM) connection
+configuration options
+- `role` - Role of the machine in the cluster. Possible values are:
+   - `manager`
+   - `worker`
+   - `dtr`
+- `environment` - Key - value pairs in YAML mapping syntax. Values are updated
+to host environment (optional)
+- `engineConfig` - Docker Engine configuration in YAML mapping syntax, will be
+converted to `daemon.json` (optional)
 
 #### `ssh`
+
+SSH configuration options.
 
 - `user` - User to log in as (default: `root`)
 - `port` - Host's ssh port (default: `22`)
 - `keyPath` - A local file path to an ssh private key file (default `~/.ssh/id_rsa`)
 
 #### `winRM`
+
+WinRM configuration options. 
 
 - `user` - Windows account username (default: `Administrator`)
 - `password` - User account password
@@ -133,10 +151,10 @@ Specify options for the UCP cluster itself.
 - `version` - Which version of UCP we should install or upgrade to (default `3.3.0`)
 - `imageRepo` - Which image repository we should use for UCP installation (default `docker.io/docker`)
 - `installFlags` - Custom installation flags for UCP installation. You can get a list of supported installation options for a specific UCP version by running the installer container with `docker run -t -i --rm docker/ucp:3.3.0 install --help`. (optional)
-- `licenseFilePath` - A path to Docker Enterprise license file. (optional)
-- `configFile` - The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options). (optional)
-- `configData` -  The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html#configuration-options) in embedded "heredocs" way. (optional)
-- `cloud` - Cloud provider configuration (optional)
+- `licenseFilePath` - Optional. A path to Docker Enterprise license file.
+- `configFile` - Optional. The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html).
+- `configData` -  Optional. The initial full cluster [configuration file](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/ucp-configure/ucp-configuration-file.html) in embedded "heredocs" way. Heredocs allows you to define a mulitiline string while maintaining the original formatting and indenting
+- `cloud` - Optional. Cloud provider configuration
 
 #### `cloud`
 
@@ -148,7 +166,7 @@ Cloud provider configuration.
 
 ### `dtr`
 
-Specify options for the DTR cluster itself.
+Specify options for the DTR cluster.
 
 - `version` - Which version of DTR we should install or upgrade to (default `2.8.1`)
 - `imageRepo` - Which image repository we should use for DTR installation (default `docker.io/docker`)
@@ -163,12 +181,16 @@ Specify options for the DTR cluster itself.
 
 ### `engine`
 
- Specify options for Docker EE engine to be installed
+ Specify options for Docker Engine - Enterprise to be installed
 
-- `version` - The version of Docker EE engine to be installed or upgraded to. (default `19.03.8`)
-- `channel` - Which installation channel to use. One of `test` or `prod` (optional)
-- `repoURL` - Which repository URL to use for engine installation. (optional)
-- `installURLLinux` - Where to download the initial installer script for linux hosts. Also local paths can be used. (default: `https://get.mirantis.com/`)
+- `version` - The version of engine that you want to install or upgraded to. (default `19.03.8`)
+- `channel` - Installation channel to use. One of `test` or `prod` (optional)
+- `repoURL` - Repository URL to use for engine installation. (optional)
+- `installURLLinux` - Where to download the initial installer script for linux hosts. Local paths can also be used. (default: `https://get.mirantis.com/`)
 - `installURLWindows` - Where to download the initial installer script for windows hosts. Also local paths can be used. (default: `https://get.mirantis.com/install.ps1`)
 
-**Note:** Normally you should not need to specify anything else than the version for the engine. `repoUrl` and `installURLLinux/Windows` are only usually used when installing from non-standard location, e.g. when running in disconnected datacenters.
+**Note:** In most scenarios, you should not need to specify `repoUrl` and `installURLLinux/Windows`, which are only usually used when installing from a non-standard location like a disconnected datacenter.
+
+## Related topics
+
+* [Mirantis Launchpad command reference](command-reference.md)

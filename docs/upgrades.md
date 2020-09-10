@@ -1,10 +1,10 @@
-# Upgrading clusters with Mirantis Launchpad
+# Upgrade components with Mirantis Launchpad
 
-Mirantis Launchpad allows users to upgrade their clusters with  single `launchpad apply` reconciliation command. The tool itself will discover the current state of the cluster and all it's components and will upgrade what is needed.
+Mirantis Launchpad allows users to upgrade their clusters with the `launchpad apply` reconciliation command. The tool itself will discover the current state of the cluster and all it's components and will upgrade what is needed.
 
-## Upgrading the Docker EE Engine
+## Upgrading Docker Engine - Enterprise
 
-Say you want to upgrade the Docker EE engine running in the cluster. You've bootsrapped the cluster with version `19.03.8` and want to upgrade to say `19.03.14`. What you'd need to do is to bump the engine version in your `cluster.yaml` file:
+To upgrade Docker Engine - Enterprise, change the engine version in the `launchpad.yaml` file.
 
 ```yaml
 apiVersion: launchpad.mirantis.com/v1beta3
@@ -16,13 +16,19 @@ spec:
   - address: 10.0.0.1
     role: manager
   engine:
-    version: 19.03.14 # was previously 19.03.8
+    version: 19.03.12 # was previously 19.03.8
 ```
-Once the file is ready, just re-run `launchpad apply` command. Launchpad will upgrade the engine instalation on all hosts in steps. First it will upgrade the engine on each manager node one-by-one, in multi-manager case only single manager gets "down" during the process. For worker nodes it will run the upgrade process for 10% of the nodes at time. So during the engine upgrade, 10% of the nodes might be "down" for a short while.
+After you update `launchpad.yaml`, you can run `launchpad apply`. Launchpad will upgrade the engine on all hosts in a specific sequence.
 
-## Upgrading UCP or DTR components
+1. Upgrade the engine on each manager node one-by-one. This means that if you have more than one manager node, the other manager nodes are available while the first node is updated.
 
-When a newer version of UCP or DTR is available you need to just bump the associated version tag in the `cluster.yml`:
+2. After the first manager node is updated and running again, the second is updated, and so on until all of the manager nodes are running the new version of the engine.
+
+3. 10% of worker nodes are updated at a time until all of the worker nodes are running the new version of engine.
+
+## Upgrading UCP or DTR
+
+When a newer version of UCP or DTR is available you can upgrade to it by changing the version tags in the `launchpad.yaml`:
 
 ```yaml
 apiVersion: launchpad.mirantis.com/v1beta3
@@ -39,10 +45,26 @@ spec:
     version: 2.8.1
 ```
 
-Once the file is ready, just re-run `launchpad apply` command. Launchpad will connect to the nodes and discovers the current cluster state and will notice we need to upgrade components. It will run the required upgraders and within few minutes your cluster will be upgraded to the given version.
+1. Update the version tags and save `launchpad.yaml`.
 
-**Note:** Both UCP and DTR components only support upgrades for one minor (`y` in `x.y.z`) bumps in the upgrade so make sure you're not trying to hop too far at once.
+2. Run the `launchpad apply` command.
 
-## Upgrading Docker EE engine, UCP and DTR at the same time
+3. Launchpad connects to the nodes gets the current version of each component.
 
-It is possible to upgrade the engine, UCP and DTR components within the same `launchpad apply` run. Launchpad will first upgrade the engines on all the nodes as described above and only after that it will upgrade UCP components, then finally DTR components.
+4. Launchpad upgrades each node as described in the "Upgrading Docker Engine - Enterprise" section. This may take several minutes.
+
+**Note:** UCP and DTR upgrade paths require consecutive minor versions. For example, you cannot upgrade from UCP 3.1.0 to 3.1.2; you must upgrade from UCP 3.1.0 to 3.1.1 to 3.1.2.
+
+## Upgrading Docker Engine - Enterprise, UCP, and DTR together
+
+You can upgrade all of the components -- engine, UCP, and DTR -- at the same time.
+
+1. Update `launchpad.yaml`, as shown in the previous sections.
+
+2. Run the `launchpad apply` command.
+
+3. Launchpad upgrades the engines on all the nodes as described in the "Upgrading Docker Engine - Enterprise" section.
+
+4. Launchpad upgrades UCP on all nodes.
+
+5. Launchpad upgrades DTR.
