@@ -67,8 +67,7 @@ To reset or uninstall a UCP cluster.
 
 The supported options are:
 
-* `--config` - Path to a cluster config file, including the filename
-(default: `launchpad.yaml`)
+* `--config` - Path to a cluster config file, including the filename (default: `launchpad.yaml`)
 
 ## Related topics
 
