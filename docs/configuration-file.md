@@ -78,8 +78,7 @@ spec:
     installURLWindows: https://get.mirantis.com/install.ps1
 ```
 
-We follow Kubernetes-like versioning and grouping in launchpad configuration
-so you'll see familiar attributes such as `kind`.
+We follow Kubernetes-like versioning and grouping in launchpad configuration so you'll see familiar attributes such as `kind`.
 
 ## `apiVersion`
 
