@@ -1,4 +1,4 @@
-# System Requirements
+# System Requirements for Mirantis Launchpad
 
 Mirantis Launchpad is a static binary that works on following operating systems:
 
@@ -6,9 +6,12 @@ Mirantis Launchpad is a static binary that works on following operating systems:
 * MacOS (x64)
 * Windows (x64)
 
-## System Requirements for UCP Clusters
+## UCP requirements
+In addition to the requirement for running Launchpad, you must also meet the system requirements for UCP.
 
-### Supported Operating Systems
+### Supported Operating Systems for UCP
+
+UCP can be installed on the following operating systems. 
 
 * CentOS 7
 * CentOS 8
@@ -36,13 +39,17 @@ Note that Windows container images are typically larger than Linux container ima
 
 ### Remote management
 
-Launchpad will connect to Linux machines via SSH and to Windows machines via SSH or WinRM. Thus, SSH or WinRM is required to be enabled on the host machines. Only passwordless sudo capable SSH Key-Based authentication is supported. On Windows the user needs to have Administrator privileges.
+Launchpad connects to Linux machines via SSH and to Windows machines via SSH or WinRM so you need to set up one of them on host instances.
 
-#### Windows Machines
+**Note:** Only passwordless sudo capable SSH Key-Based authentication is currently supported. On Windows the user needs to have Administrator privileges.
 
-##### SSH
+#### Windows setup for SSH or WinRM
 
-To enable SSH easily on Windows machines, you can look the following PowerShell snippets and modify them for your own needs and run it on each Windows machine:
+##### OpenSSH
+
+[OpenSSH](https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview) is the open-source version of the Secure Shell (SSH) tools used by administrators of Linux and other non-Windows for cross-platform management of remote systems, and is included in Windows Server 2019.
+
+1. To enable SSH on Windows, you can run the following PowerShell snippets, modified for your specific configuration, on each Windows host.
 
 ```
 # Install OpenSSH
@@ -50,6 +57,7 @@ Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'
+
 # Configure ssh key authentication
 mkdir c:\Users\Administrator\.ssh\
 $sshdConf = 'c:\ProgramData\ssh\sshd_config'
@@ -59,7 +67,7 @@ $sshdConf = 'c:\ProgramData\ssh\sshd_config'
 restart-service sshd
 ```
 
-After that you need to transfer your SSH public key from your local machine to host machines:
+2. Transfer your SSH public key from your local machine to the host, using the following example but with your own values.
 
 ```
 # Transfer SSH Key to Server
@@ -67,11 +75,9 @@ scp ~/.ssh/id_rsa.pub Administrator@1.2.1.2:C:\Users\Administrator\.ssh\authoriz
 ssh --% Administrator@1.2.1.2 powershell -c $ConfirmPreference = 'None'; Repair-AuthorizedKeyPermission C:\Users\Administrator\.ssh\authorized_keys
 ```
 
-To read more how to manage Windows with OpenSSH, you can refer the official documentation: https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview
-
 ##### WinRM
 
-PowerShell Remoting over WinRM can be also used on Windows hosts as an alternative to SSH. To read more about how to manage Windows machines over WinRM: https://docs.microsoft.com/en-us/windows/win32/winrm/portal
+As an alternative to SSH, you can use [WinRM](https://docs.microsoft.com/en-us/windows/win32/winrm/portal) can be also used on Windows hosts as an alternative to SSH. 
 
 ### Ports Used
 

@@ -6,9 +6,9 @@ The simplest way to configure networking for a small, temporary evaluation clust
 
 1. Create a new virtual subnet (or VPC and subnet) for hosts.
 2. Create a new security group called `de_hosts` (or another name of your choice) that permits inbound IPv4 traffic on all ports, either from a) the security group `de_hosts`, or b) the new virtual subnet only.
-3. Create a second new security group (e.g., `admit_me`) that permits inbound IPv4 traffic from your deployer machine's public IP address only (you can use the website [whatismyip.com](http://whatismyip.com)) to determine your public IP.
+3. Create another new security group (e.g., `admit_me`) that permits inbound IPv4 traffic from your deployer machine's public IP address only (you can use the website [whatismyip.com](http://whatismyip.com)) to determine your public IP.
 4. When launching hosts, attach them to the newly-created subnet, and apply both new security groups
-5. Once you know the (public, or VPN-accessible private) IPv4 addresses of your nodes, if you aren't using local DNS, it makes sense to assign names to your hosts (e.g., manager, worker1, worker2 ... etc.) and insert IP addresses and names in your hostfile, letting you (and Launchpad) refer to hosts by hostname instead of IP address.
+5. Optional. Once you know the (public, or VPN-accessible private) IPv4 addresses of your nodes, if you aren't using local DNS, it makes sense to assign names to your hosts (e.g., manager, worker1, worker2 ... etc.) and insert IP addresses and names in your hostfile, letting you (and Launchpad) refer to hosts by hostname instead of IP address.
 
 Once the hosts are booted, you should be able to SSH into them from your deployer machine with your private key, e.g.:
 
@@ -25,11 +25,11 @@ Once you can do this, you should be able to proceed with installing Launchpad an
 
 #### Using a VPN
 
-A more-secure way to manage networking is to connect your deployer machine to your VPC/subnet using a VPN, and modify the de_hosts security group to accept traffic on all ports from this source. Most public clouds have a VPN service that can be used to set this up fairly simply.
+A more secure way to manage networking is to connect your deployer machine to your VPC/subnet using a VPN, and modify the `de_hosts` security group to accept traffic on all ports from this source. Most public clouds have a VPN service that can be used to set this up fairly simply.
 
 #### More deliberate network security
 
-If you intend to deploy a cluster for longer-term evaluation, it makes sense to secure it more deliberately. In this case, a certain range of ports will need to be opened on hosts. Please see [System Requirements: Ports Used](system-requirements.md#ports-used) for links to documentation.
+If you intend to deploy a cluster for longer-term evaluation, it makes sense to secure it more deliberately. In this case, a certain range of ports will need to be opened on hosts. See [UCP documentation](https://docs.mirantis.com/docker-enterprise/v3.1/dockeree-products/ucp/install-ucp.html#ports-used) for more details.
 
 #### Using DNS
 
