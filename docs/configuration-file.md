@@ -82,9 +82,7 @@ We follow Kubernetes-like versioning and grouping in launchpad configuration so 
 
 ## `apiVersion`
 
-Launchpad currently supports `launchpad.mirantis.com/v1beta1`, `v1beta2`, and
-`v1beta3`. Earlier configuration file syntaxes should still work but
-will not have support for changes and additions in new versions.
+The latest API version is `launchpad.mirantis.com/v1beta3`, but earlier configuration file syntaxes should still work without support for the changes and additions in later versions.
 
 ## `kind`
 
