@@ -1,8 +1,6 @@
 # Mirantis Launchpad Configuration File
 
-Mirantis Launchpad cluster configuration is described in YAML format. You can
-create and modify yaml files using your favorite text editor. The default name
-for this file is launchpad.yaml, although other file names could be used.
+Mirantis Launchpad cluster configuration is described in YAML format. You can create and modify yaml files using your favorite text editor. The default name for this file is launchpad.yaml, although other file names could be used.
 
 ## Configuration File Reference
 
