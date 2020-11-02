@@ -111,8 +111,8 @@ locals {
   ]
 }
 
-output "ucp_cluster" {
-  value = {
+locals {
+  launchpad_tmpl = {
     apiVersion = "launchpad.mirantis.com/v1"
     kind       = "DockerEnterprise"
     metadata = {
@@ -130,6 +130,10 @@ output "ucp_cluster" {
       hosts = concat(local.managers, local.workers, local.windows_workers)
     }
   }
+}
+
+output "ucp_cluster" {
+  value = yamlencode(local.launchpad_tmpl)
 }
 
 output "loadbalancers" {
