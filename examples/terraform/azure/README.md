@@ -6,7 +6,6 @@ This directory provides an example flow for using Mirantis Launchpad with Terraf
 
 * An account and credentials for Azure.
 * Terraform [installed](https://learn.hashicorp.com/terraform/getting-started/install)
-* [yq installed](https://github.com/mikefarah/yq#install)
 
 ## Steps
 
