@@ -6,7 +6,6 @@ This directory provides an example flow with Mirantis Launchpad together with Te
 
 * You need an account and credentials for an OpenStack Tenant.
 * Terraform [installed](https://learn.hashicorp.com/terraform/getting-started/install)
-* [yq installed](https://github.com/mikefarah/yq#install)
 * [Generate SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
 
 ## Steps
@@ -14,7 +13,7 @@ This directory provides an example flow with Mirantis Launchpad together with Te
 1. Create terraform.tfvars file with needed details. You can use the provided terraform.tfvars.example as a baseline.
 2. `terraform init`
 3. Create SSH key and configure path
-4. Create Cloud Provider config file and configure path 
+4. Create Cloud Provider config file and configure path
 5. Configure .tfvars file with all necessary parameters
 6. `terraform apply`
 7. `terraform output ucp_cluster > launchpad.yaml`

@@ -7,7 +7,6 @@ This directory provides an example flow with Mirantis Launchpad tool together wi
 
 * You need an account and API token for Hetzner
 * Terraform [installed](https://learn.hashicorp.com/terraform/getting-started/install)
-* [yq installed](https://github.com/mikefarah/yq#install)
 
 ## Steps
 

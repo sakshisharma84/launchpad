@@ -7,7 +7,6 @@ This directory provides an example flow with Mirantis Launchpad tool together wi
 
 * You need VMware vSphere credentials for API operations
 * Terraform [installed](https://learn.hashicorp.com/terraform/getting-started/install)
-* [yq installed](https://github.com/mikefarah/yq#install)
 
 ## Steps
 
