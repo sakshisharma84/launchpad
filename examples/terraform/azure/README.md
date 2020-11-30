@@ -1,4 +1,4 @@
-# Bootstrapping UCP cluster on Azure
+# Bootstrapping MKE cluster on Azure
 
 This directory provides an example flow for using Mirantis Launchpad with Terraform and Azure.
 
@@ -12,8 +12,7 @@ This directory provides an example flow for using Mirantis Launchpad with Terraf
 1. Create terraform.tfvars file with needed details. You can use the provided terraform.tfvars.example as a baseline.
 2. `terraform init`
 3. `terraform apply`
-4. `terraform output ucp_cluster > launchpad.yaml`
-5. `launchpad apply`
+4. `terraform output mke_cluster | launchpad apply --config -`
 
 ## Notes
 
@@ -21,5 +20,5 @@ This directory provides an example flow for using Mirantis Launchpad with Terraf
 2. Only Linux workers are added to the LoadBalancer created for workers.
 3. Both RDP and WinRM ports are opened for Windows workers.
 4. A default storage account is created for kubernetes.
-5. The number of Fault & Update Domains varies depending on which Azure Region you're using. A list can be found [here](https://github.com/MicrosoftDocs/azure-docs/blob/master/includes/managed-disks-common-fault-domain-region-list.md). The Fault & Update Domain values are used in the Availability Set definitions.
-6. **Windows worker nodes need to be rebooted after engine install, which must be done manually until version 1.1 is released**
+5. The number of Fault & Update Domains varies depending on which Azure Region you're using. A list can be found [here](https://github.com/MicrosoftDocs/azure-docs/blob/master/includes/managed-disks-common-fault-domain-region-list.md). The Fault & Update Domain values are used in the Availability Set definitions
+6. Windows worker nodes may be rebooted after engine install
