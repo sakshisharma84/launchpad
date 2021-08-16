@@ -1,12 +1,12 @@
 # Mirantis Launchpad
 
-Mirantis Launchpad CLI tool ("**launchpad**") simplifies and automates deploying [Mirantis Kubernetes Engine](https://www.mirantis.com/software/docker/docker-enterprise/) on public clouds (like AWS or Azure), private clouds (like OpenStack or VMware), virtualization platforms (like VirtualBox, VMware Workstation, Parallels, etc.), or bare metal.
+Mirantis Launchpad CLI tool ("**launchpad**") simplifies and automates deploying [Mirantis Container Runtime](https://docs.mirantis.com/welcome/mcr), [Mirantis Kubernetes Engine](https://docs.mirantis.com/welcome/mke) and [Mirantis Secure Registry](https://docs.mirantis.com/welcome/msr) on public clouds (like AWS or Azure), private clouds (like OpenStack or VMware), virtualization platforms (like VirtualBox, VMware Workstation, Parallels, etc.), or bare metal.
 
 Launchpad can also provide full cluster lifecycle management. Multi-manager, high availability clusters, defined as having sufficient node capacity to move active workloads around while updating, can be upgraded with no downtime.
 
 ## Documentation
 
-Launchpad documentation can be browsed on the [Mirantis Documentation site](https://docs.mirantis.com/containers/v3.1/dockeree-products/deployment-tools/launchpad.html).
+Launchpad documentation can be browsed on the [Mirantis Documentation site](https://docs.mirantis.com/mke/3.4/launchpad.html).
 
 ## Example
 
