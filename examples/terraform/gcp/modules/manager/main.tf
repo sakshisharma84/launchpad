@@ -86,5 +86,3 @@ module "load_balancer_manager" {
   health_check_port     = 443
   target_instance_group = google_compute_instance_group.default.self_link
 }
-
-

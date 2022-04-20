@@ -102,6 +102,7 @@ locals {
       privateInterface = "ens4"
     }
   ]
+
   msrs = [
     for host in module.msrs.machines : {
       ssh = {
@@ -113,6 +114,7 @@ locals {
       privateInterface = "ens4"
     }
   ]
+
   workers = [
     for host in module.workers.machines : {
       ssh = {
@@ -124,6 +126,7 @@ locals {
       privateInterface = "ens4"
     }
   ]
+
   windows_workers = [
     for host in module.windows_workers.machines : {
       winRM = {
@@ -137,6 +140,7 @@ locals {
       privateInterface = "Ethernet"
     }
   ]
+
   mke_launchpad_tmpl = {
     apiVersion = "launchpad.mirantis.com/mke/v1.3"
     kind       = "mke"
@@ -154,7 +158,6 @@ locals {
       hosts = concat(local.managers, local.msrs, local.workers, local.windows_workers)
     }
   }
-
 
   msr_launchpad_tmpl = {
     apiVersion = "launchpad.mirantis.com/mke/v1.3"

@@ -27,4 +27,3 @@ resource "google_compute_region_health_check" "default" {
     port = var.health_check_port
   }
 }
-

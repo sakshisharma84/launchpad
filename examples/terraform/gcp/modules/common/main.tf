@@ -47,7 +47,6 @@ resource "google_compute_firewall" "common_ssh" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-
 resource "google_compute_firewall" "common_all_egress" {
   name        = "${var.cluster_name}-all-egress"
   description = "mke cluster common rule"

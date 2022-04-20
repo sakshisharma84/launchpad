@@ -23,7 +23,6 @@ The authentication credentials can be passed to `google` provider in two ways:
 3. `terraform apply`
 4. `terraform output --raw mke_cluster | launchpad apply --config -`
 
-
 ## Notes
 
 1. Both RDP and WinRM ports are opened for Windows workers.

@@ -317,7 +317,6 @@ EOF
     ssh_keys {
       path     = "/home/ubuntu/.ssh/authorized_keys"
       key_data = var.ssh_key.public_key_openssh
-
     }
   }
 

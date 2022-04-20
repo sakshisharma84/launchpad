@@ -30,5 +30,4 @@ variable "health_check_port" {
 variable "target_instance_group" {
   type        = string
   description = "Target instance group for the network load balancer"
-
 }
