@@ -104,11 +104,19 @@ EOF
   }
 
   tags = [
+    var.cluster_name,
     "allow-rdp",
     "allow-winrm",
     "allow-worker",
     "allow-internal"
   ]
+
+  service_account {
+    email = var.service_account_email
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
 
   provisioner "remote-exec" {
     connection {

@@ -24,9 +24,18 @@ resource "google_compute_instance" "mke_worker" {
     access_config {
     }
   }
+
   tags = [
+    var.cluster_name,
     "allow-ssh",
     "allow-worker",
     "allow-internal"
   ]
+
+  service_account {
+    email = var.service_account_email
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
 }
