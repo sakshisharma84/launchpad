@@ -30,7 +30,7 @@ resource "google_service_account" "default" {
 resource "google_project_iam_member" "default" {
   project = var.project_id
   member  = "serviceAccount:${google_service_account.default.email}"
-  role    = "roles/owner"
+  role    = "roles/compute.admin"
 }
 
 resource "google_compute_firewall" "common_internal" {

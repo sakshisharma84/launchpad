@@ -20,7 +20,7 @@ variable "gcp_service_credential" {
 
 variable "vpc_mtu" {
   default     = 1500
-  description = "MTU for the VPC. GCP support two MTU values for the VPC: 1440 or 1500"
+  description = "MTU for the VPC. GCP support two MTU values for the VPC: 1460 or 1500"
 }
 
 variable "vpc_cidr" {
