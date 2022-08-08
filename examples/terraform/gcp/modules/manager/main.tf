@@ -53,11 +53,20 @@ resource "google_compute_instance" "mke_manager" {
     access_config {
     }
   }
+
   tags = [
+    var.cluster_name,
     "allow-ssh",
     "allow-manager",
     "allow-internal"
   ]
+
+  service_account {
+    email = var.service_account_email
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
 }
 
 resource "google_compute_instance_group" "default" {

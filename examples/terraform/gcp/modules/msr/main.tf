@@ -37,6 +37,7 @@ resource "google_compute_instance" "mke_msr" {
     }
   }
   tags = [
+    var.cluster_name,
     "allow-ssh",
     "allow-msr",
     "allow-internal"

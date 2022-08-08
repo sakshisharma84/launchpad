@@ -40,15 +40,16 @@ module "common" {
 }
 
 module "managers" {
-  source          = "./modules/manager"
-  manager_count   = var.manager_count
-  gcp_region      = var.gcp_region
-  gcp_zone        = local.zone
-  cluster_name    = var.cluster_name
-  image_name      = module.common.image_name
-  vpc_name        = module.vpc.vpc_name
-  subnetwork_name = module.vpc.subnet_name
-  ssh_key         = module.common.ssh_key
+  source                = "./modules/manager"
+  manager_count         = var.manager_count
+  gcp_region            = var.gcp_region
+  gcp_zone              = local.zone
+  cluster_name          = var.cluster_name
+  image_name            = module.common.image_name
+  vpc_name              = module.vpc.vpc_name
+  subnetwork_name       = module.vpc.subnet_name
+  ssh_key               = module.common.ssh_key
+  service_account_email = module.common.service_account_email
 }
 
 module "msrs" {
@@ -64,30 +65,32 @@ module "msrs" {
 }
 
 module "workers" {
-  source          = "./modules/worker"
-  worker_count    = var.worker_count
-  gcp_region      = var.gcp_region
-  gcp_zone        = local.zone
-  cluster_name    = var.cluster_name
-  vpc_name        = module.vpc.vpc_name
-  subnetwork_name = module.vpc.subnet_name
-  image_name      = module.common.image_name
-  ssh_key         = module.common.ssh_key
-  worker_type     = var.worker_type
+  source                = "./modules/worker"
+  worker_count          = var.worker_count
+  gcp_region            = var.gcp_region
+  gcp_zone              = local.zone
+  cluster_name          = var.cluster_name
+  vpc_name              = module.vpc.vpc_name
+  subnetwork_name       = module.vpc.subnet_name
+  image_name            = module.common.image_name
+  ssh_key               = module.common.ssh_key
+  worker_type           = var.worker_type
+  service_account_email = module.common.service_account_email
 }
 
 module "windows_workers" {
-  source           = "./modules/windows_worker"
-  worker_count     = var.windows_worker_count
-  gcp_zone         = local.zone
-  cluster_name     = var.cluster_name
-  vpc_name         = module.vpc.vpc_name
-  subnetwork_name  = module.vpc.subnet_name
-  image_name       = module.common.windows_2019_image_name
-  ssh_key          = module.common.ssh_key
-  worker_type      = var.worker_type
-  windows_user     = var.windows_user
-  windows_password = var.windows_password
+  source                = "./modules/windows_worker"
+  worker_count          = var.windows_worker_count
+  gcp_zone              = local.zone
+  cluster_name          = var.cluster_name
+  vpc_name              = module.vpc.vpc_name
+  subnetwork_name       = module.vpc.subnet_name
+  image_name            = module.common.windows_2019_image_name
+  ssh_key               = module.common.ssh_key
+  worker_type           = var.worker_type
+  windows_user          = var.windows_user
+  windows_password      = var.windows_password
+  service_account_email = module.common.service_account_email
 }
 
 locals {

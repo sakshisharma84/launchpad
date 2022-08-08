@@ -12,6 +12,8 @@ variable "image_name" {}
 
 variable "ssh_key" {}
 
+variable "service_account_email" {}
+
 variable "worker_count" {
   default = 3
 }

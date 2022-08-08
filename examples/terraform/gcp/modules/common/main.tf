@@ -11,14 +11,26 @@ resource "local_file" "ssh_public_key" {
   }
 }
 
+
 data "google_compute_image" "ubuntu" {
-  family  = "ubuntu-1804-lts"
+  family  = "ubuntu-2004-lts"
   project = "ubuntu-os-cloud"
 }
 
 data "google_compute_image" "windows_2019" {
-  family  = "windows-2019-core-for-containers"
+  family  = "windows-2019-core"
   project = "windows-cloud"
+}
+
+resource "google_service_account" "default" {
+  account_id   = "${var.cluster_name}-service-account-id"
+  display_name = "Service Account"
+}
+
+resource "google_project_iam_member" "default" {
+  project = var.project_id
+  member  = "serviceAccount:${google_service_account.default.email}"
+  role    = "roles/compute.admin"
 }
 
 resource "google_compute_firewall" "common_internal" {
